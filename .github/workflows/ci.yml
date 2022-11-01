@@ -23,7 +23,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
 
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
   
       - name: Check format (Ubuntu)
         run: ${{github.workspace}}/.github/scripts/clang-format.sh
@@ -78,3 +78,9 @@ jobs:
         run: |
           cd ${{env.BUILD_PATH}}
           ctest -V -C ${{env.BUILD_TYPE}}
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build(${{ matrix.os }})
+          path: ${{env.BUILD_PATH}}
