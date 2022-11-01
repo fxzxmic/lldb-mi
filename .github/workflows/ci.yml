@@ -74,13 +74,13 @@ jobs:
       - name: Build
         run: cmake --build ${{env.BUILD_PATH}} --config ${{env.BUILD_TYPE}}
 
-      - name: Run testsuite
-        run: |
-          cd ${{env.BUILD_PATH}}
-          ctest -V -C ${{env.BUILD_TYPE}}
-
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: build(${{ matrix.os }})
-          path: ${{env.BUILD_PATH}}
+          path: ${{env.BUILD_PATH}}/
+
+      - name: Run testsuite
+        run: |
+          cd ${{env.BUILD_PATH}}
+          ctest -V -C ${{env.BUILD_TYPE}}
